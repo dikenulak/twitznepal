@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TWITZNEPAL</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="navigation">
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+             <%if current_user %>
+           <%= link_to image_tag('logo.png'), twitzs_path,:class=>"navbar-brand c-white"%>
+           <% else %>
+            <%= link_to image_tag('logo.png'), root_url,:class=>"navbar-brand c-white"%>
+           <% end %>
+          </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <%if current_user %>
+                <li> <%= link_to "My-Profile", current_user, :class => "c-white"  %></li>
+                <li><%= link_to "Public Profile", users_path, :class => "c-white" %></li>
+                  <li><%= link_to "Public Twitzs", twitzs_path, :class => "c-white" %></li>
+                  <li><%= link_to("Log Out",logout_path, :class => "c-white") %></li>
+              <%else %>
+                <div class="form-inline">
+              <%= form_tag sessions_path do %>
+                  <%= text_field_tag :email, nil, placeholder: "email", :class=>"form-control",:required => true%>
+                  <%= password_field_tag :password, nil, placeholder: "password", :class=>"form-control",:required => true%>
+                  <%= submit_tag "Login", :class =>"btn btn-primary" %><br>
+              <%end %>
+                <a class="pull-right c-white" href="">Forgot Password!!</a>
+              <%end %>
+            </div>
+          </ul>
+      <!--     <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+          </form> -->
+          <div class="clearfix"></div>
+        </div><!-- /.navbar-collapse -->
+      </div>
+    </nav>
+  </div>
+  <div class="container">
+      <% flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, class: name %>
+      <% end -%>
+  </div>
+ <%= yield %>
+<footer class="c-white text-center">
+    COPYRIGHT All Right Reserved!!TWITZNEPAL &copy;<%= Date.today.year %>
+</footer>
+  <!-- Latest compiled and minified JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"> </script>
+</body>
+</html>

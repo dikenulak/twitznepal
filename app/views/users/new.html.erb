@@ -1,0 +1,47 @@
+  <div class="new-login">
+   <div class="container">
+      <div class="col-md-6 ">
+      <img src="<%= asset_path('young-people.jpg') %>" class="img-responsive" alt="Image">
+      </div>
+      <div class="col-md-offset-1 col-md-5">
+      <div class="login">
+      <h3 class="c-white">New to TWITZNEPAL</h3>
+       <%= form_for(@user) do |f| %>
+       <% if @user.errors.any? %>
+       <div id="error_explanation">
+        <%= pluralize(@user.errors.count, "error") %>
+          prohibited this product from being saved:
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+        <% end %>
+
+          <%= f.label :email, :for=>"nameField" %><br>
+          <%= f.text_field :email, type: :email, :class=>"form-control"
+           %>
+
+          <%= f.label :name,:for=>"descField" %><br>
+          <%= f.text_field :name, :class=>"form-control"
+           %>
+
+          <%= f.label :username, :for=>"usernameField" %><br>
+          <%= f.text_field :username, :class=>"form-control" %>
+
+          <%= f.label :password,:for=>"descField" %><br>
+          <%=f.password_field :password, :class=>"form-control"
+           %>
+
+          <%= f.label :password_confirmation,:for=>"descfield" %><br>
+          <%=f.password_field :password_confirmation , :class=>"form-control"
+           %>
+        <%= f.submit 'Sign up',:class=>"btn btn-success marg-5" %>
+        <%= button_tag "Reset", type: :reset, :class=>
+            "btn btn-danger marg-5" %>
+        <% end %>
+      </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,47 @@
+<div class="prof-backg marg-5">
+      <img src="<%= asset_path('background.jpg') %>" class="img-responsive" alt="Image">
+</div>
+<div class="show">
+  <div class="container">
+    <div class="col-md-6">
+      <div class="show-prof">
+        <h2> Your TWITZNEPAL Profile</h2>
+        <img src="<%= @user.avatar_url%>" class="img-responsive" alt="Image">
+        <span><%= @user.name %></span>
+        <span>@<%= @user.username %></span>
+        <p>
+          <%= @user.twitzs.length %> Twitz
+          <span class="spacing"><%= @user.followers.length %>&nbsp;Followers</span>
+          <span><%= @user.followeds.length %>&nbsp;Following</span>
+        </p>
+      </div>
+       <div class="show-prof marg-40">
+          <h2>Your Twitz</h2>
+          <div class="ribbitWrapper">
+          <% @user.twitzs.each do |twitz| %>
+                <img src="<%= twitz.user.avatar_url%>" class="img-responsive" alt="Image">
+                <span><%= twitz.user.name %></span>
+              <span>@<%= twitz.user.username %></span>
+              <span class="time"><%= time_ago_in_words(twitz.created_at) %>&nbsp;ago</span>
+              <p>
+                <%= twitz.content %>
+              </p>
+            <% end %>
+          </div>
+        </div>
+    </div>
+    <% if current_user %>
+    <div class="col-md-offset-2 col-md-3">
+      <h2>Create a Twitz</h2>
+        <p>
+        <%= form_for @twitz do |t| %>
+        <%= t.text_area :content, :id=>"twitztxt",:class=>"text-area", :required=> true%>
+        <%= t.submit "Twitz!!!", :class=>"btn btn-success marg-5", :id=> "twitzbtn" %>
+        <span class="c-white" id="CharCount">0</span>
+        <% end %>
+      </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%= javascript_include_tag 'twitzs' %>
