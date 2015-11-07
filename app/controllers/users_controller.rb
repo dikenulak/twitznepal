@@ -16,5 +16,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_id(params[:id])
     @twitz = Twitz.new
+    @relationship =  Relationship.where(
+      follower_id: current_user,
+      followed_id: @user.id
+      ).first_or_initialize if current_user
   end
 end

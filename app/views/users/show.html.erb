@@ -5,7 +5,7 @@
   <div class="container">
     <div class="col-md-6">
       <div class="show-prof">
-        <h2> Your TWITZNEPAL Profile</h2>
+        <h2><%= @user.name %>'s TwitzNepal Profile</h2>
         <img src="<%= @user.avatar_url%>" class="img-responsive" alt="Image">
         <span><%= @user.name %></span>
         <span>@<%= @user.username %></span>
@@ -13,10 +13,23 @@
           <%= @user.twitzs.length %> Twitz
           <span class="spacing"><%= @user.followers.length %>&nbsp;Followers</span>
           <span><%= @user.followeds.length %>&nbsp;Following</span>
+          <% if current_user && @user != current_user %>
+            <% if current_user.following? @user %>
+                <%= form_for @relationship, method: :delete do |f| %>
+                    <%= f.submit "Unfollow", :class=>"btn btn-success marg-5"  %>
+                 <% end %>
+            <% else %>
+                 <%= form_for @relationship do |f| %>
+                    <%= f.hidden_field :followed_id, value: @user.id %>
+                    <%= f.submit "Follow", :class=>"btn btn-success marg-5"  %>
+                 <% end %>
+            <% end %>
+
+          <% end %>
         </p>
       </div>
        <div class="show-prof marg-40">
-          <h2>Your Twitz</h2>
+          <h2>Twitz</h2>
           <div class="ribbitWrapper">
           <% @user.twitzs.each do |twitz| %>
                 <img src="<%= twitz.user.avatar_url%>" class="img-responsive" alt="Image">
